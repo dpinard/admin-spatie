@@ -40,7 +40,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'name' => 'test0',
             'email' => 'test0@test0.com',
             'password' => bcrypt('1234'),
-            'active' => 0,
         ]);
         $user->assignRole($role1, $role2, $role3);
 

@@ -6,7 +6,10 @@
         
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">
+                    {{ __('Dashboard') }} 
+                <a href="{{url('/post/create')}}" class="btn btn-primary"> New Post </a>
+                </div>
             </div>
             @if ($posts ?? '')
                 @foreach ($posts as $item)

@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'active'
+        'name', 'email', 'password', 'last_connection_at'
     ];
 
     /**
@@ -39,30 +39,17 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_connection_at' => 'datetime',
     ];
-
-    public function scopehasAdmin(Builder $query)
-    {
-        $query->whereHas('roles', function (Builder $query) {
-            return $query->where('role_id', 2);
-        });
-    }
-
-    public function scopehasUser(Builder $query) 
-    {
-        $query->whereHas('roles', function (Builder $query) {
-            return $query->where('role_id', 1);
-        });
-    }
 
     public function scopeisOnline(Builder $query)
     {
-        return $query->where('active', 1);
+        return $query->where('last_connection_at', '>=', now()->subMinutes(5));
     }
 
     public function posts() 
     {
-        return $this->hasMany('App\Post');
+        return $this->hasMany(Post::class);
     }
 
 

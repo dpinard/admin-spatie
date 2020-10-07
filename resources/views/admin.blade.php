@@ -43,7 +43,6 @@
                         <th>ajouter droit</th>
                         <th>retirer</th>
                         <th>supprimer</th>
-                        <th>en ligne</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,13 +70,6 @@
                             <td>
                                 <button>X</button>
                             </td>   
-                            <td>
-                                @if ($item->active === 1)
-                                    <button class="btn btn-success">oui</button>
-                                @else
-                                    <button class="btn btn-danger">non</button>
-                                @endif
-                            </td>                     
                         </tr>
                     @endforeach
                 </tbody>

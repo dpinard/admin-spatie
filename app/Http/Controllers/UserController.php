@@ -22,32 +22,28 @@ class UserController extends Controller
         ]);
     }
 
-    public function moveUpRole($role) 
+    public function moveUpRole($id) 
     {
-        $user = User::where('id', $role)->first();
-        $res = $user->assignRole('admin');
+        User::find($id)->assignRole('admin');
         return back();
     }
 
-    public function moveDownRole($role)
+    public function moveDownRole($id)
     {
-        $user = User::where('id', $role)->first();
-        $res = $user->removeRole('admin');
+        User::find($id)->removeRole('admin');
         return back();
     }
 
-    public function admin($option) {
-        if ($option === 'admin'){
-            $user = User::hasAdmin()
-                ->get();
-        }
-        else if ($option === 'user'){
-            $user = User::hasUser()
-                ->get();
-        }
-        else if ($option === 'online'){
+    public function admin(Request $request, $option) 
+    {               
+        if ($option === 'online')
+        {
             $user = User::isOnline()
-                ->get();
+            ->get();
+        }
+        else 
+        {
+            $user = User::role($option)->get();
         }
 
         return view('admin', [

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,29 +17,39 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', [
+        'posts' => Post::latest()->get(),
+    ]);
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Route::resource('user', 'UserController');
 
-Route::get('/post/create', 'PostController@index');
-Route::post('/post/create', 'PostController@create');
+Route::group(['middleware' => ['role:user|super-admin']], function(){
+    Route::get('/post/create', 'PostController@index');
+    Route::post('/post/create', 'PostController@create');              
+    Route::get('/post/read/{post}', 'PostController@read');              
+    Route::get('/post/update/{post}', 'PostController@updateIndex');
+    Route::post('/post/update/{post}', 'PostController@update');              
+    Route::get('/post/delete/{post}', 'PostController@delete');    
+});
 
-Route::get('/post/read/{id}', 'PostController@read');
-Route::get('/post/update/{id}', 'PostController@updateIndex');
-Route::post('/post/update/', 'PostController@update');
-Route::get('/post/delete/{id}', 'PostController@delete');
+Route::group(['middleware' => ['role:admin|super-admin']], function(){ 
+    Route::get('/admin', 'UserController@index')
+        ->name('admin');
+    
+    Route::get('/admin/moveUp/{id}', 'UserController@moveUpRole')
+        ->name('moveUpRole');
 
-
-Route::group(['middleware' => ['role:super-admin']], function(){ 
-                Route::get('/admin', 'UserController@index')->name('admin');
-                Route::get('/admin/moveUp/{role}', 'UserController@moveUpRole')->name('moveUpRole');
-                Route::get('/admin/moveDown/{role}', 'UserController@moveDownRole')->name('moveDownRole');
-                Route::get('/admin/{options}', 'UserController@admin')->name('admin-filters');
-                
+    Route::get('/admin/moveDown/{id}', 'UserController@moveDownRole')
+        ->name('moveDownRole');
+    
+    Route::get('/admin/{options}', 'UserController@admin')
+        ->name('admin-filters')
+        ->where('options', 'admin|super-admin|user|online');                
 });
 
 
