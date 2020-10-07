@@ -23,15 +23,15 @@ class UserController extends Controller
         ]);
     }
 
-    public function moveUpRole($id) 
+    public function moveUpRole(User $user) 
     {
-        User::find($id)->assignRole('admin');
+        $user->assignRole('admin');
         return back();
     }
 
-    public function moveDownRole($id)
+    public function moveDownRole(User $user)
     {
-        User::find($id)->removeRole('admin');
+        $user->removeRole('admin');
         return back();
     }
 

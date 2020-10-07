@@ -42,14 +42,14 @@ class User extends Authenticatable
         'last_connection_at' => 'datetime',
     ];
 
-    public function scopeisOnline(Builder $query)
-    {
-        return $query->where('last_connection_at', '>=', now()->subMinutes(5));
-    }
-
     public function posts() 
     {
         return $this->hasMany(Post::class);
+    }
+    
+    public function scopeisOnline(Builder $query)
+    {
+        return $query->where('last_connection_at', '>=', now()->subMinutes(5));
     }
 
 

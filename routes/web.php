@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use App\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,7 +29,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Route::resource('user', 'UserController');
 
-Route::group(['middleware' => ['role:user|super-admin']], function(){
+Route::group(['middleware' => ['permission:create post|read post|update post|delete post role:admin|super-admin']], function(){
     Route::get('/post/create', 'PostController@index');
     Route::post('/post/create', 'PostController@create');              
     Route::get('/post/read/{post}', 'PostController@read');              
@@ -37,10 +38,6 @@ Route::group(['middleware' => ['role:user|super-admin']], function(){
     Route::get('/post/delete/{post}', 'PostController@delete');    
 });
 
-
-Route::get('/user/read/{user}');
-Route::get('/user/update/{user}');
-
 Route::get('/user/delete/{user}', 'UserController@delete')
     ->middleware('permission:delete user|role:super-admin');
 
@@ -48,11 +45,11 @@ Route::get('/user/delete/{user}', 'UserController@delete')
 Route::group(['middleware' => ['role:admin|super-admin']], function(){ 
     Route::get('/admin', 'UserController@index')
         ->name('admin');
-    
-    Route::get('/admin/moveUp/{id}', 'UserController@moveUpRole')
+        
+    Route::get('/admin/moveUp/{user}', 'UserController@moveUpRole')
         ->name('moveUpRole');
 
-    Route::get('/admin/moveDown/{id}', 'UserController@moveDownRole')
+    Route::get('/admin/moveDown/{user}', 'UserController@moveDownRole')
         ->name('moveDownRole');
     
     Route::get('/admin/{options}', 'UserController@admin')

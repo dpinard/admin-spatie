@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <!-- Styles -->
         <style>
             html, body {
@@ -57,9 +58,6 @@
                 text-transform: uppercase;
             }
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
         </style>
     </head>
     <body>
@@ -78,10 +76,35 @@
                 </div>
             @endif
 
-            <div class="content">
-                {{$posts}}
+            <div class="content container">
+                <h3> ARTICLES</h3>
+                @foreach ($posts as $item)
+                    
+                <div class="card">
+                    <div class="card-body">
+                        
+                        <h5 class="card-title">{{$item->title}}</h5>
+                        <p class="card-text">{{$item->content}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
 
+                            <div class="flex text-left">
+                                <a href="#" class="btn ">edit by: {{$item->user->name}}</a>
+                                <em>created at:</em> {{$item->created_at}}
+                            </div>
+                            
+                            <div class="flex text-right">
+                                <a href="#" class="btn btn-primary">like</a>
+                                <a href="#" class="btn btn-primary">dislike</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                
             </div>
+
         </div>
     </body>
 </html>

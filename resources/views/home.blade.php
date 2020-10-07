@@ -12,24 +12,26 @@
                 </div>
             </div>
             @if ($posts ?? '')
-                <table class='table'>
-                    <thead>
-                        <th>id</th>
-                        <th>title</th>
-                        <th>content</th>
-                        <th>modifier</th>
-                        <th>supprimer</th>
-                    </thead>
-                    <tbody>
+                @if (count($posts) > 0)
+                    <table class='table'>
+                        <thead>
+                            <th>id</th>
+                            <th>title</th>
+                            <th>content</th>
+                            <th>modifier</th>
+                            <th>supprimer</th>
+                        </thead>
                         @foreach ($posts as $item)
-                            <td> {{$item->id}} </td>
-                            <td> {{$item->title}} </td>
-                            <td> {{$item->content}} </td>
-                            <td> <a href="{{url('post/update').'/'.$item->id}}" class="btn btn-primary">?</a> </td>
-                            <td> <a href="{{url('post/delete').'/'.$item->id}}" class="btn btn-primary">X</a> </td>
+                            <tbody>
+                                <td> {{$item->id}} </td>
+                                <td> {{$item->title}} </td>
+                                <td> {{$item->content}} </td>
+                                <td> <a href="{{url('post/update').'/'.$item->id}}" class="btn btn-primary">?</a> </td>
+                                <td> <a href="{{url('post/delete').'/'.$item->id}}" class="btn btn-primary">X</a> </td>
+                            </tbody>
                         @endforeach
-                    </tbody>
-                </table>
+                    </table>
+                @endif
             @endif
         </div>
 

@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\User;
 use Closure;
-
+use Illuminate\Support\Facades\Auth;
 
 class updateLastConnection
 {
@@ -17,9 +18,9 @@ class updateLastConnection
     public function handle($request, Closure $next)
     {
         if (auth()->check()){
-            auth()->user()->update([
-                'last_connection_at' => now(),
-            ]);
+                auth()->user()->update([
+                    'last_connection_at' => now(),
+                ]);
         }
         return $next($request);
     }
