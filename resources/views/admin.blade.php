@@ -5,7 +5,6 @@
     
     <h1>Admin interface</h1>
 
-    
     @can('upgrade admin')
     
     <div> 
@@ -43,6 +42,7 @@
                         <th>ajouter droit</th>
                         <th>retirer</th>
                         <th>supprimer</th>
+                        <th>posts</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,8 +68,14 @@
                                 </a>
                             </td>
                             <td>
-                                <button>X</button>
-                            </td>   
+                            <a href="{{url('/user/delete').'/'.$item->id}}" class="btn-primary">
+                                    <button>X</button>
+                                </a>
+                            </td>
+                            <td>
+                                {{$item->posts->count()}}
+                            </td>    
+
                         </tr>
                     @endforeach
                 </tbody>

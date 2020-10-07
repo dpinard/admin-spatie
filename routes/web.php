@@ -37,6 +37,14 @@ Route::group(['middleware' => ['role:user|super-admin']], function(){
     Route::get('/post/delete/{post}', 'PostController@delete');    
 });
 
+
+Route::get('/user/read/{user}');
+Route::get('/user/update/{user}');
+
+Route::get('/user/delete/{user}', 'UserController@delete')
+    ->middleware('permission:delete user|role:super-admin');
+
+
 Route::group(['middleware' => ['role:admin|super-admin']], function(){ 
     Route::get('/admin', 'UserController@index')
         ->name('admin');
@@ -49,7 +57,7 @@ Route::group(['middleware' => ['role:admin|super-admin']], function(){
     
     Route::get('/admin/{options}', 'UserController@admin')
         ->name('admin-filters')
-        ->where('options', 'admin|super-admin|user|online');                
+        ->where('options', 'admin|super-admin|user|online');
 });
 
 

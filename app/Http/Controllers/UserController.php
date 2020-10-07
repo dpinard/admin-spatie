@@ -13,7 +13,8 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request) {
+    public function index(Request $request) 
+    {
         $users = User::all();
         
         return view('admin', [
@@ -52,5 +53,11 @@ class UserController extends Controller
         ]);
     }
 
+    public function delete(User $user)
+    {
+        $user->delete();
+
+        return redirect('admin');
+    }
 
 }
