@@ -12,12 +12,24 @@
                 </div>
             </div>
             @if ($posts ?? '')
-                @foreach ($posts as $item)
-                    <li>
-                            {{$item->title}}
-                    </li>
-                
-                @endforeach
+                <table class='table'>
+                    <thead>
+                        <th>id</th>
+                        <th>title</th>
+                        <th>content</th>
+                        <th>modifier</th>
+                        <th>supprimer</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($posts as $item)
+                            <td> {{$item->id}} </td>
+                            <td> {{$item->title}} </td>
+                            <td> {{$item->content}} </td>
+                            <td> <a href="{{url('post/update').'/'.$item->id}}" class="btn btn-primary">?</a> </td>
+                            <td> <a href="{{url('post/delete').'/'.$item->id}}" class="btn btn-primary">X</a> </td>
+                        @endforeach
+                    </tbody>
+                </table>
             @endif
         </div>
 

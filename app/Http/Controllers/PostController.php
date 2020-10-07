@@ -42,7 +42,7 @@ class PostController extends Controller
 
     public function updateIndex(Post $post)
     {
-        abort_if($post->user_id == auth()->id() || !auth()->user()->hasRole('admin'), 403);
+        abort_if($post->user_id != auth()->id() && !auth()->user()->hasRole('admin') , 404);
 
         return view('posts.update', [
             'post' => $post
@@ -51,7 +51,7 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        abort_if($post->user_id == auth()->id() || !auth()->user()->hasRole('admin'), 403);
+        abort_if($post->user_id != auth()->id() && !auth()->user()->hasRole('admin'), 403);
         $post->update([
             'title' => $request->title,
             'content' => $request->content,
@@ -62,7 +62,7 @@ class PostController extends Controller
 
     public function delete(Post $post)
     {
-        abort_if($post->user_id == auth()->id() || !auth()->user()->hasRole('admin'), 403);
+        abort_if($post->user_id != auth()->id() && auth()->user()->hasRole('admin'), 403);
         $post->delete();
 
         return redirect('home');
